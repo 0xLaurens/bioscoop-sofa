@@ -19,4 +19,9 @@ public class MovieScreening(DateTime dateAndTime, double pricePerSeat, Movie mov
       return GetDateAndTime().DayOfWeek == DayOfWeek.Sunday
              || GetDateAndTime().DayOfWeek == DayOfWeek.Saturday;
    }
+
+   public override string ToString()
+   {
+      return "Movie: " + movie + ", Date: " + dateAndTime + ", Price: " + pricePerSeat;
+   }
 }

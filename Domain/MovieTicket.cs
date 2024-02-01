@@ -28,4 +28,9 @@ public class MovieTicket(MovieScreening movieScreening, bool isPremium, int rowN
    {
       return _movieScreening;
    }
+
+   public override string ToString()
+   {
+      return GetScreening() + ", Row: " + rowNr + ", Seat: " + seatNr + ", Premium: " + isPremium; 
+   }
 }

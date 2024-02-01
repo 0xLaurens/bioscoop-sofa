@@ -11,4 +11,9 @@ public class Movie(string title)
    {
       _screenings.Add(screening);
    }
+
+   public override string ToString()
+   {
+      return title;
+   }
 }
