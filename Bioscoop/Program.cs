@@ -21,3 +21,4 @@ order.AddSeatReservation(movieTicket6);
 
 Console.WriteLine(order.CalculatePrice());
 order.Export(TicketExportFormat.Json);
+order.Export(TicketExportFormat.Plaintext);
