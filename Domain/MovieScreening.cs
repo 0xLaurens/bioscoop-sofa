@@ -2,9 +2,9 @@ using System.Collections;
 
 namespace Data;
 
-public class MovieScreening(DateTime dateAndTime, decimal pricePerSeat, Movie movie)
+public class MovieScreening(DateTime dateAndTime, double pricePerSeat, Movie movie)
 {
-   public decimal GetPricePerSeat()
+   public double GetPricePerSeat()
    {
       return pricePerSeat;
    }

@@ -21,7 +21,7 @@ public class Order(int orderNr, bool isStudentOrder)
         MovieTickets.Add(movieTicket);
     }
 
-    public decimal CalculatePrice()
+    public double CalculatePrice()
     {
         if (_calculatePriceStrategy == null)
         {

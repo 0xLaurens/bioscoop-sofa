@@ -3,9 +3,9 @@ namespace Data;
 public class StudentPricingPriceStrategy: ICalculatePriceStrategy
 {
 
-    public decimal CalculatePrice(List<MovieTicket> tickets, bool isStudentOrder)
+    public double CalculatePrice(List<MovieTicket> tickets, bool isStudentOrder)
     {
-        var totalPrice = 0.0m;
+        var totalPrice = 0.0;
         for (var i = 0; i < tickets.Count; i++)
         {
             var ticket = tickets[i];
@@ -29,7 +29,7 @@ public class StudentPricingPriceStrategy: ICalculatePriceStrategy
 
             if (ticket.GetScreening().IsWeekend() && tickets.Count >= 6)
             {
-                basePrice *= 0.9m;
+                basePrice *= 0.9;
             } 
             
             totalPrice += basePrice;
