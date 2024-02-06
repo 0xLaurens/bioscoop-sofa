@@ -21,51 +21,7 @@ public class Order(int orderNr, bool isStudentOrder)
 
     public double CalculatePrice()
     {
-        double totalPrice = 0.0;
-
-        for (int i = 0; i < MovieTickets.Count; i++)
-        {
-            MovieTicket ticket = MovieTickets[i];
-            double basePrice = ticket.GetPrice();
-
-            // For students the second ticket is free. 
-            // ex.
-            // 0 % 2 = 0 -> not free 
-            // 1 % 2 = 1 -> free
-            // 2 % 2 = 0 -> not free
-            // etc.
-            if (IsStudentOrder && i % 2 == 1)
-            {
-                continue;
-            }
-
-            // Throughout the week the second ticket is free
-            // Weekend is defined as (Saturday and Sunday) despite in the text it defining the weekend
-            // as (monday/tuesday/wednesday/thursday) 
-            if (!ticket.GetScreening().IsWeekend() && i % 2 == 1)
-            {
-                continue;
-            }
-
-            // Premium tickets are more expensive
-            // 2 euro price increase for students
-            // 3 euro for non-students
-            if (ticket.IsPremiumTicket())
-            {
-                basePrice += IsStudentOrder ? 2 : 3;
-            }
-
-            // Weekend group discount price if group size larger than 6    
-            // 10% price reduction  
-            if (ticket.GetScreening().IsWeekend() && MovieTickets.Count >= 6)
-            {
-                basePrice *= 0.9;
-            }
-
-            totalPrice += basePrice;
-        }
-
-        return totalPrice;
+        
     }
 
     public void Export(TicketExportFormat exportFormat)
