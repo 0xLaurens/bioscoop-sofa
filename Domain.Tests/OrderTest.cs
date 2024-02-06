@@ -25,6 +25,9 @@ public class Tests
         MovieTicket movieTicket5 = new(movieScreening, premiumTickets, 1, 5); // 10
         Order order = new(1, studentPricing);
 
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
+        
         // act
         order.AddSeatReservation(movieTicket1);
         order.AddSeatReservation(movieTicket2);
@@ -62,6 +65,9 @@ public class Tests
         MovieTicket movieTicket6 = new(movieScreening, premiumTickets, 1, 6); // free 
         MovieTicket movieTicket7 = new(movieScreening, premiumTickets, 1, 7); // 10 
         Order order = new(1, studentPricing);
+        
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -101,6 +107,10 @@ public class Tests
         MovieTicket movieTicket4 = new(movieScreening, premiumTickets, 1, 4); // free
         MovieTicket movieTicket5 = new(movieScreening, premiumTickets, 1, 5); // 10
         Order order = new(1, studentPricing);
+        
+        
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -138,6 +148,9 @@ public class Tests
         MovieTicket movieTicket5 = new(movieScreening, premiumTickets, 1, 5); // 10
         Order order = new(1, studentPricing);
 
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
+        
         // act
         order.AddSeatReservation(movieTicket1);
         order.AddSeatReservation(movieTicket2);
@@ -175,6 +188,8 @@ public class Tests
         MovieTicket movieTicket6 = new(movieScreening, premiumTickets, 1, 6); // 10
 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -216,6 +231,10 @@ public class Tests
         MovieTicket movieTicket8 = new(movieScreening, premiumTickets, 1, 8); // 10
 
         Order order = new(1, studentPricing);
+        
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
+        
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -257,6 +276,8 @@ public class Tests
         MovieTicket movieTicket5 = new(movieScreening, premiumTickets, 1, 5); // 10
 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -290,6 +311,8 @@ public class Tests
         MovieTicket movieTicket1 = new(movieScreening, premiumTickets, 1, 1); // 10 + 2        
 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -320,6 +343,9 @@ public class Tests
         MovieTicket movieTicket1 = new(movieScreening, premiumTickets, 1, 1); // 10 + 2        
 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
+        
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -349,6 +375,8 @@ public class Tests
         MovieTicket movieTicket1 = new(movieScreening, premiumTickets, 1, 1); // 10 + 3
 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -379,6 +407,8 @@ public class Tests
         MovieTicket movieTicket1 = new(movieScreening, premiumTickets, 1, 1); // 10 + 3
 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -414,6 +444,8 @@ public class Tests
         MovieTicket movieTicket5 = new(movieScreening, premiumTickets, 1, 5); // 10 + 2
 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
         // act
         order.AddSeatReservation(movieTicket1);
@@ -451,7 +483,10 @@ public class Tests
         MovieTicket movieTicket4 = new(movieScreening, premiumTickets, 1, 4); // free 
         MovieTicket movieTicket5 = new(movieScreening, premiumTickets, 1, 5); // 10 +3 
         Order order = new(1, studentPricing);
+        var strategy = new StudentPricingPriceStrategy();
+        order.SetCalculatePriceStrategy(strategy);
 
+        
         // act
         order.AddSeatReservation(movieTicket1);
         order.AddSeatReservation(movieTicket2);

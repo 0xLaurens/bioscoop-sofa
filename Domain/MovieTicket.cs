@@ -19,7 +19,7 @@ public class MovieTicket(MovieScreening movieScreening, bool isPremium, int rowN
       return IsPremium;
    }
 
-   public double GetPrice()
+   public decimal GetPrice()
    {
       return _movieScreening.GetPricePerSeat();
    }
