@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 
 namespace Data;
 
@@ -6,6 +7,7 @@ public class Order(int orderNr, bool isStudentOrder)
 {
     private int OrderNr { get; } = orderNr;
     private bool IsStudentOrder { get; } = isStudentOrder;
+    private ICalculatePriceStrategy? _calculatePriceStrategy;
     
     private List<MovieTicket> MovieTickets { get; } = [];
 
@@ -21,7 +23,17 @@ public class Order(int orderNr, bool isStudentOrder)
 
     public double CalculatePrice()
     {
+        if (_calculatePriceStrategy == null)
+        {
+            throw new Exception("Strategy missing");
+        }
         
+        return _calculatePriceStrategy.CalculatePrice(MovieTickets, IsStudentOrder);
+    }
+
+    public void SetCalculatePriceStrategy(ICalculatePriceStrategy? calculatePriceStrategy)
+    {
+        _calculatePriceStrategy = calculatePriceStrategy;
     }
 
     public void Export(TicketExportFormat exportFormat)
