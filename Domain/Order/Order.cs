@@ -11,6 +11,8 @@ public class Order(int orderNr, bool isStudentOrder)
     
     private List<MovieTicket> MovieTickets { get; } = [];
 
+    private IOrderState state;
+
     public int GetOrderNr()
     {
         return OrderNr;
@@ -31,8 +33,19 @@ public class Order(int orderNr, bool isStudentOrder)
         return _calculatePriceStrategy.CalculatePrice(MovieTickets, IsStudentOrder);
     }
 
+    public void setIOrderState(IOrderState state)
+    {
+        this.state = state;
+    }
+
+    public IOrderState getIOrderState()
+    {
+        return this.state;
+    }
+
     public void SetCalculatePriceStrategy(ICalculatePriceStrategy? calculatePriceStrategy)
     {
+        
         _calculatePriceStrategy = calculatePriceStrategy;
     }
 
