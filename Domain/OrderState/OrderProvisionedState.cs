@@ -1,18 +1,22 @@
-﻿namespace Data.OrderState
+﻿using Data.Observers;
+
+namespace Data.OrderState
 {
     public class OrderProvisionedState : IOrderState
     {
         private readonly IOrderContext _context;
+        private readonly IPublisher _publisher;
 
 
-        public OrderProvisionedState(IOrderContext context)
+        public OrderProvisionedState(IOrderContext context, IPublisher publisher)
         {
+            _publisher = publisher;
             _context = context;
         }
 
         public void Cancel()
         {
-            _context.Notify();
+            _publisher.Notify();
             _context.SetState(new OrderCancelledState());
         } 
 
@@ -25,16 +29,16 @@
             // Wat is DRY 
             if (paid)
             {
-                _context.Notify();
-                _context.SetState(new OrderPaidState(_context));
+                _publisher.Notify();
+                _context.SetState(new OrderPaidState(_context, _publisher));
             }
             else if (hoursUntilScreening is < 24 and > 12)
             {
-                _context.Notify();
+                _publisher.Notify();
             }
             else 
             {
-                _context.Notify();
+                _publisher.Notify();
                 _context.SetState(new OrderCancelledState());
             }
 

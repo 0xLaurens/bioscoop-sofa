@@ -1,4 +1,5 @@
 using Data;
+using Data.Observers;
 using Data.OrderState;
 using Moq;
 
@@ -12,12 +13,13 @@ public class OrderObservableTest
     {
         // Arrange
         var orderContext = new Mock<IOrderContext>();
-        var orderState = new OrderCreatedState(orderContext.Object);
+        var orderPublisher = new Mock<IPublisher>();
+        var orderState = new OrderCreatedState(orderContext.Object, orderPublisher.Object);
 
         // Act
         orderState.Submit();
         // Assert
-        orderContext.Verify(context => context.Notify(), Times.Once);
+        orderPublisher.Verify(pub => pub.Notify(), Times.Once);
     }
 
     [Test]
@@ -25,12 +27,13 @@ public class OrderObservableTest
     {
         // Arrange
         var orderContext = new Mock<IOrderContext>();
-        var orderState = new OrderProvisionedState(orderContext.Object);
+        var orderPublisher = new Mock<IPublisher>();
+        var orderState = new OrderProvisionedState(orderContext.Object, orderPublisher.Object);
 
         // Act
         orderState.CheckPayment(false);
         // Assert
-        orderContext.Verify(context => context.Notify(), Times.Once);
+        orderPublisher.Verify(pub => pub.Notify(), Times.Once);
     }
 
     [Test]
@@ -38,12 +41,13 @@ public class OrderObservableTest
     {
         // Arrange
         var orderContext = new Mock<IOrderContext>();
-        var orderState = new OrderProvisionedState(orderContext.Object);
+        var orderPublisher = new Mock<IPublisher>();
+        var orderState = new OrderProvisionedState(orderContext.Object, orderPublisher.Object);
 
         // Act
         orderState.Cancel();
         // Assert
-        orderContext.Verify(context => context.Notify(), Times.Once);
+        orderPublisher.Verify(pub => pub.Notify(), Times.Once);
     }
 
     [Test]
@@ -51,11 +55,12 @@ public class OrderObservableTest
     {
         // Arrange
         var orderContext = new Mock<IOrderContext>();
-        var orderState = new OrderProvisionedState(orderContext.Object);
+        var orderPublisher = new Mock<IPublisher>();
+        var orderState = new OrderProvisionedState(orderContext.Object, orderPublisher.Object);
 
         // Act
         orderState.CheckPayment(true);
         // Assert
-        orderContext.Verify(context => context.Notify(), Times.Once);
+        orderPublisher.Verify(pub => pub.Notify(), Times.Once);
     }
 }

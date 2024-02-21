@@ -1,11 +1,15 @@
-﻿namespace Data.OrderState
+﻿using Data.Observers;
+
+namespace Data.OrderState
 {
     public class OrderPaidState : IOrderState
     {
         private readonly IOrderContext _context;
+        private readonly IPublisher _publisher;
 
-        public OrderPaidState(IOrderContext context)
+        public OrderPaidState(IOrderContext context, IPublisher publisher)
         {
+            _publisher = publisher;
             _context = context;
         }
 

@@ -1,12 +1,16 @@
-﻿namespace Data.OrderState
+﻿using Data.Observers;
+
+namespace Data.OrderState
 {
     public class OrderCreatedState : IOrderState
     {
         private readonly IOrderContext _context;
+        private readonly IPublisher _publisher;
 
-        public OrderCreatedState(IOrderContext context)
+        public OrderCreatedState(IOrderContext context, IPublisher publisher)
         {
-            this._context = context;
+            _publisher = publisher; 
+            _context = context;
         }
 
         public void Cancel() => throw new InvalidOperationException("Cannot cancel, order not reserved yet");
@@ -19,8 +23,8 @@
 
         public void Submit()
         {
-            _context.Notify();
-            _context.SetState(new OrderReservedState(_context));  
+            _publisher.Notify();
+            _context.SetState(new OrderReservedState(_context, _publisher));  
         } 
         
 

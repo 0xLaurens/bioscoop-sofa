@@ -1,11 +1,15 @@
-﻿namespace Data.OrderState
+﻿using Data.Observers;
+
+namespace Data.OrderState
 {
     public class OrderReservedState : IOrderState
     {
         private readonly IOrderContext _context;
+        private readonly IPublisher _publisher;
 
-        public OrderReservedState(IOrderContext context)
+        public OrderReservedState(IOrderContext context, IPublisher publisher)
         {
+            _publisher = publisher;
             _context = context;
         }
 
@@ -23,12 +27,12 @@
         {
             if (paid)
             {
-                _context.Notify();
-                _context.SetState(new OrderPaidState(_context));
+                _publisher.Notify();
+                _context.SetState(new OrderPaidState(_context, _publisher));
                 return;
             }
             
-            _context.SetState(new OrderProvisionedState(_context));
+            _context.SetState(new OrderProvisionedState(_context, _publisher));
         } 
 
 

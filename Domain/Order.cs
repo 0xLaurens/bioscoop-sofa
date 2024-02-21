@@ -6,12 +6,12 @@ using DocentoScoop.Domain.Models;
 
 namespace Data;
 
-public class Order : IOrderContext, IEventManager
+public class Order : IOrderContext, IPublisher
 {
     private readonly int orderNr;
     private readonly bool isStudentOrder;
 
-    private List<IEventListener> _listeners = new List<IEventListener>();
+    private List<ISubscriber> _listeners = new List<ISubscriber>();
     private readonly List<MovieTicket> tickets = new List<MovieTicket>();
     private readonly IEnumerable<ITicketPriceRule> ticketPriceRules = new List<ITicketPriceRule>();
     private readonly IEnumerable<IOrderExporter> orderExporters = new List<IOrderExporter>();
@@ -27,7 +27,7 @@ public class Order : IOrderContext, IEventManager
         this.ticketPriceRules = ticketPriceRules;
         this.orderExporters = orderExporters;
 
-        this._currentState = new OrderCreatedState(this);
+        this._currentState = new OrderCreatedState(this, this);
     }
 
     public void SetState(IOrderState state) => this._currentState = state;
@@ -92,12 +92,12 @@ public class Order : IOrderContext, IEventManager
 
     public DateTime GetScreeningDate() => this.tickets.Select(x => x.GetScreeningDate()).OrderBy(x => x).First();
 
-    public void Subscribe(IEventListener listener)
+    public void Subscribe(ISubscriber listener)
     {
         _listeners.Add(listener);
     }
 
-    public void Unsubscribe(IEventListener listener)
+    public void Unsubscribe(ISubscriber listener)
     {
         _listeners.Remove(listener);
     }
