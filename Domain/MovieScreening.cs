@@ -1,27 +1,30 @@
-using System.Collections;
+﻿namespace DocentoScoop.Domain.Models;
 
-namespace Data;
-
-public class MovieScreening(DateTime dateAndTime, double pricePerSeat, Movie movie)
+public class MovieScreening
 {
-   public double GetPricePerSeat()
-   {
-      return pricePerSeat;
-   }
+    private DateTime dateAndTime;
+    private decimal pricePerSeat;
 
-   public DateTime GetDateAndTime()
-   {
-      return dateAndTime;
-   }
-   
-   public bool IsWeekend()
-   {
-      return GetDateAndTime().DayOfWeek == DayOfWeek.Sunday
-             || GetDateAndTime().DayOfWeek == DayOfWeek.Saturday;
-   }
+    public MovieScreening(Movie movie, DateTime dateAndTime, decimal pricePerSeat)
+    {
+        this.dateAndTime = dateAndTime;
+        this.pricePerSeat = pricePerSeat;
+    }
 
-   public override string ToString()
-   {
-      return "Movie: " + movie + ", Date: " + dateAndTime + ", Price: " + pricePerSeat;
-   }
+    public DateTime getDate()
+    {
+        return dateAndTime;
+    }
+
+    public decimal getPricePerSeat()
+    {
+        return pricePerSeat;
+    }
+
+    public string toString()
+    {
+        return dateAndTime.ToString() + " " + pricePerSeat;
+    }
 }
+
+

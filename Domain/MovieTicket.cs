@@ -1,36 +1,44 @@
-using System.Text.Json.Serialization;
+﻿using System.Net.Sockets;
 
-namespace Data;
+namespace DocentoScoop.Domain.Models;
 
-public class MovieTicket(MovieScreening movieScreening, bool isPremium, int rowNr, int seatNr)
+public class MovieTicket
 {
-   // In order to serialize the object the fields have to be public
-   // The fields are encapsulated to prevent them being changed.
-   
-   public MovieScreening _movieScreening = movieScreening;
-   [JsonPropertyName("isPremium")]
-   public bool IsPremium { get; } = isPremium;
-   [JsonPropertyName("rowNr")]
-   public int RowNr { get; } = rowNr;
-   [JsonPropertyName("seatNr")]
-   public int SeatNr { get; } = seatNr;
-   public bool IsPremiumTicket()
-   {
-      return IsPremium;
-   }
+    private readonly int rowNr;
+    private readonly int seatNr;
+    private readonly bool isPremium;
+    private readonly MovieScreening movieScreening;
 
-   public double GetPrice()
-   {
-      return _movieScreening.GetPricePerSeat();
-   }
+    public MovieTicket(MovieScreening movieScreening, int rowNr, int seatNr, bool isPremium)
+    {
+        this.movieScreening = movieScreening;
+        this.rowNr = rowNr;
+        this.seatNr = seatNr;
+        this.isPremium = isPremium;
+    }
 
-   public MovieScreening GetScreening()
-   {
-      return _movieScreening;
-   }
+    public bool IsPremiumTicket()
+    {
+        return isPremium;
+    }
 
-   public override string ToString()
-   {
-      return GetScreening() + ", Row: " + rowNr + ", Seat: " + seatNr + ", Premium: " + isPremium; 
-   }
+    public decimal GetPrice()
+    {
+        return movieScreening.getPricePerSeat();
+    }
+
+    public int GetSeatNr() => this.seatNr;
+
+    public int GetRowNr() => this.rowNr;
+
+    public DateTime GetScreeningDate()
+    {
+        return movieScreening.getDate();
+    }
+
+    public bool IsWeekendScreening()
+    {
+        return this.GetScreeningDate().DayOfWeek == DayOfWeek.Sunday || this.GetScreeningDate().DayOfWeek == DayOfWeek.Saturday;
+    }
+
 }

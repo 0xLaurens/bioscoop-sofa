@@ -1,19 +1,23 @@
-using System.Collections;
+﻿namespace DocentoScoop.Domain.Models;
 
-namespace Data;
-
-public class Movie(string title)
+public class Movie
 {
-   private string _title = title;
-   private List<MovieScreening> _screenings = new();
+    private readonly string title;
+    private readonly List<MovieScreening> screenings = new List<MovieScreening>();
 
-   public void AddScreening(MovieScreening screening)
-   {
-      _screenings.Add(screening);
-   }
+    public Movie(string title)
+    {
+        this.title = title;
+    }
 
-   public override string ToString()
-   {
-      return title;
-   }
+    public void AddScreening(MovieScreening screening)
+    {
+        screenings.Add(screening);
+    }
+
+    public override string ToString()
+    {
+        return title;
+    }
 }
+
