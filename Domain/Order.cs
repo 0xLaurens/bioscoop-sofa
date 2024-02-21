@@ -1,15 +1,17 @@
 ﻿using Data.Exports;
+using Data.Observers;
 using Data.OrderState;
 using Data.Rules;
 using DocentoScoop.Domain.Models;
 
 namespace Data;
 
-public class Order : IOrderContext
+public class Order : IOrderContext, IEventManager
 {
     private readonly int orderNr;
     private readonly bool isStudentOrder;
 
+    private List<IEventListener> _listeners = new List<IEventListener>();
     private readonly List<MovieTicket> tickets = new List<MovieTicket>();
     private readonly IEnumerable<ITicketPriceRule> ticketPriceRules = new List<ITicketPriceRule>();
     private readonly IEnumerable<IOrderExporter> orderExporters = new List<IOrderExporter>();
@@ -17,7 +19,8 @@ public class Order : IOrderContext
     private IOrderState? _currentState = null;
 
 
-    public Order(int orderNr, bool isStudentOrder, IEnumerable<ITicketPriceRule> ticketPriceRules, IEnumerable<IOrderExporter> orderExporters)
+    public Order(int orderNr, bool isStudentOrder, IEnumerable<ITicketPriceRule> ticketPriceRules,
+        IEnumerable<IOrderExporter> orderExporters)
     {
         this.orderNr = orderNr;
         this.isStudentOrder = isStudentOrder;
@@ -62,7 +65,7 @@ public class Order : IOrderContext
             var ticketPrice = ticket.GetPrice();
 
             foreach (var pricingRule in this.ticketPriceRules)
-                if(ticketPrice > decimal.Zero)
+                if (ticketPrice > decimal.Zero)
                     ticketPrice = pricingRule.CalculateNewPrice(ticketPrice, i + 1, ticket, this);
 
             total += ticketPrice;
@@ -80,10 +83,31 @@ public class Order : IOrderContext
         exporter.Export(this);
     }
 
-    public void Submit() => this._currentState!.Submit();
+    public void Submit()
+    {
+        _currentState!.Submit();
+        Notify();
+    }
 
-    public void Change(/* some params here */) => this._currentState!.Change(/* some params here */);
+    public void Change( /* some params here */) => this._currentState!.Change( /* some params here */);
 
     public DateTime GetScreeningDate() => this.tickets.Select(x => x.GetScreeningDate()).OrderBy(x => x).First();
 
+    public void Subscribe(IEventListener listener)
+    {
+        _listeners.Add(listener);
+    }
+
+    public void Unsubscribe(IEventListener listener)
+    {
+        _listeners.Remove(listener);
+    }
+
+    public void Notify()
+    {
+        foreach (var listener in _listeners)
+        {
+            listener.Update(this);
+        }
+    }
 }

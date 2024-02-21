@@ -18,18 +18,28 @@
         {
             var hoursUntilScreening = _context.GetScreeningDate().Subtract(DateTime.Now).TotalHours;
 
+            // Wat is DRY 
             if (paid)
-                this._context.SetState(new OrderPaidState(_context));
-            else if (hoursUntilScreening < 12)
-                    this._context.SetState(new OrderCancelledState());
+            {
+                _context.Notify();
+                _context.SetState(new OrderPaidState(_context));
+            }
+            else if (hoursUntilScreening is < 24 and > 12)
+            {
+                _context.Notify();
+            }
+            else 
+            {
+                _context.Notify();
+                _context.SetState(new OrderCancelledState());
+            }
 
             // else => do nothing, in the correct state
         }
 
         public void SendTickets() => throw new InvalidOperationException("Order provisioned, not paid yet");
-       
+
 
         public void Submit() => throw new InvalidOperationException("Order provisioned, already submitted");
-
     }
 }

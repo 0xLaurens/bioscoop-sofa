@@ -21,7 +21,14 @@
 
         public void CheckPayment(bool paid)
         {
-            this._context.SetState(paid ? new OrderPaidState(_context) : new OrderProvisionedState(_context));
+            if (paid)
+            {
+                _context.Notify();
+                _context.SetState(new OrderPaidState(_context));
+                return;
+            }
+            
+            _context.SetState(new OrderProvisionedState(_context));
         } 
 
 
