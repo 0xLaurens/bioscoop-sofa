@@ -15,9 +15,13 @@
 
 
         public void CheckPayment(bool paid) => throw new InvalidOperationException("Cannot check payment, not submitted");
-        
 
-        public void Submit() => _context.SetState(new OrderReservedState(_context));
+
+        public void Submit()
+        {
+            _context.Notify();
+            _context.SetState(new OrderReservedState(_context));  
+        } 
         
 
         public void SendTickets() => throw new InvalidOperationException("Order cancelled, cannot submit");

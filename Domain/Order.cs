@@ -86,7 +86,6 @@ public class Order : IOrderContext, IEventManager
     public void Submit()
     {
         _currentState!.Submit();
-        Notify();
     }
 
     public void Change( /* some params here */) => this._currentState!.Change( /* some params here */);

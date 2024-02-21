@@ -10,7 +10,11 @@
             _context = context;
         }
 
-        public void Cancel() => _context.SetState(new OrderCancelledState());
+        public void Cancel()
+        {
+            _context.Notify();
+            _context.SetState(new OrderCancelledState());
+        } 
 
         public void Change() => throw new InvalidOperationException("Order provisioned, cannot change");
 
